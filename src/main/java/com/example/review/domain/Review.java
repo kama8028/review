@@ -13,16 +13,13 @@ public class Review {
     @Id
     @GeneratedValue
     private Long reviewId;
-
-    @ManyToOne
-    private Member member;
-
-    @OneToOne
+    private Long memberId;
+    @Embedded
     private OrderItem orderItem;
-    private String reviewTitle;
     private String reviewDescription;
     private LocalDateTime reviewDate;
-    private SatisfactionType satisfactionType;
 
+    @Enumerated(EnumType.STRING)
+    private SatisfactionType satisfactionType;
 
 }
