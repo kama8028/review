@@ -10,6 +10,7 @@ import javax.persistence.Embeddable;
 @Getter @Setter
 public class OrderItem {
 
+    private Long orderId;
     private Long orderItemId;
     private String orderItemName;
 
