@@ -18,14 +18,23 @@ public class ReviewRepository {
         em.persist(review);
     }
 
-    public Review findOne(Long reviewId) {
-        return em.createQuery("select r from Review r where r.reviewId = :reviewId", Review.class)
-                .setParameter("reviewId", reviewId).getSingleResult();
+    public void update(Review review) {
+        em.merge(review);
     }
 
-    public List<Review> findAllItem(Long orderItemId) {
-        return em.createQuery("select r from Review r where r.orderItemId = :orderItemId", Review.class)
-                .setParameter("orderItemId", orderItemId).getResultList();
+    public void delete(Long reviewId) {
+        Review review = em.find(Review.class, reviewId);
+        em.remove(review);
+    }
+
+    public Review findOne(Long orderItemId) {
+        return em.createQuery("select r from Review r where r.orderItem.orderItemId = :orderItemId", Review.class)
+                .setParameter("orderItemId", orderItemId).getSingleResult();
+    }
+
+    public List<Review> findAllItem(Long itemId) {
+        return em.createQuery("select r from Review r where r.orderItem.itemId = :itemId", Review.class)
+                .setParameter("itemId", itemId).getResultList();
     }
 
 }
