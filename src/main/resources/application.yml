@@ -16,3 +16,25 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9099
+        streams:
+          binder:
+            configuration:
+              default:
+                key:
+                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                value:
+                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      bindings:
+        event-in:
+          group: review
+          destination: ecomarket
+          contentType: application/json
+        event-out:
+          destination: ecomarket
+          contentType: application/json
