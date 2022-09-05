@@ -16,7 +16,7 @@ spec:
         app: review
     spec:
       containers:
-        - name: mypage
+        - name: review
           image: 104844728320.dkr.ecr.ap-northeast-2.amazonaws.com/review:latest
           imagePullPolicy: Always
           ports:
