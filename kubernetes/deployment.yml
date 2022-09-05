@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: review
+  namespace: ecomarket
+  labels:
+    app: review
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: review
+  template:
+    metadata:
+      labels:
+        app: review
+    spec:
+      containers:
+        - name: mypage
+          image: 104844728320.dkr.ecr.ap-northeast-2.amazonaws.com/review:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
