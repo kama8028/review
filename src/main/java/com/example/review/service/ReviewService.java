@@ -4,12 +4,18 @@ import com.example.review.domain.OrderItem;
 import com.example.review.domain.Review;
 import com.example.review.domain.SatisfactionType;
 import com.example.review.repository.ReviewRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Embedded;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,9 +29,28 @@ public class ReviewService {
         return reviewRepository.findOne(orderItemId);
     }
 
-    @Transactional
+/*    @Transactional
     public List<Review> findAllItem(Long itemId) {
-        return reviewRepository.findAllItem(itemId);
+
+
+        List<ReviewDto> review = reviewRepository.findAllItem(itemId).stream().map(m -> new ReviewDto(m)).collect(Collectors.toList());
+//        List<Review> review = reviewRepository.findAllItem(itemId);
+//        List<Review> review = new ArrayList<>();
+
+        //return reviewRepository.findAllItem(itemId);
+        return review;
+    }*/
+
+    @Transactional
+    public List<ReviewDto> findAllItem(Long itemId) {
+
+
+        List<ReviewDto> review = reviewRepository.findAllItem(itemId).stream().map(m -> new ReviewDto(m)).collect(Collectors.toList());
+//        List<Review> review = reviewRepository.findAllItem(itemId);
+//        List<Review> review = new ArrayList<>();
+
+        //return reviewRepository.findAllItem(itemId);
+        return review;
     }
 
     @Transactional
@@ -63,6 +88,27 @@ public class ReviewService {
     public Long deleteReview(Long reviewId) {
         reviewRepository.delete(reviewId);
         return reviewId;
+    }
+
+    @Getter
+    public class ReviewDto {
+
+        private Long reviewId;
+        private Long memberId;
+        private OrderItem orderItem;
+        private String reviewDescription;
+        private LocalDateTime reviewDate;
+        private String satisfactionType;
+
+        public ReviewDto(Review review) {
+            reviewId = review.getReviewId();
+            memberId = review.getMemberId();
+            orderItem = review.getOrderItem();
+            reviewDescription = review.getReviewDescription();
+            reviewDate = review.getReviewDate();
+            satisfactionType = review.getSatisfactionType().getValue();
+            System.out.println(satisfactionType);
+        }
     }
 
 }
