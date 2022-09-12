@@ -13,6 +13,7 @@ import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,7 +98,8 @@ public class ReviewService {
         private Long memberId;
         private OrderItem orderItem;
         private String reviewDescription;
-        private LocalDateTime reviewDate;
+        //private LocalDateTime reviewDate;
+        private String reviewDate;
         private String satisfactionType;
 
         public ReviewDto(Review review) {
@@ -105,7 +107,8 @@ public class ReviewService {
             memberId = review.getMemberId();
             orderItem = review.getOrderItem();
             reviewDescription = review.getReviewDescription();
-            reviewDate = review.getReviewDate();
+            //reviewDate = review.getReviewDate();
+            reviewDate = review.getReviewDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             satisfactionType = review.getSatisfactionType().getValue();
             System.out.println(satisfactionType);
         }
